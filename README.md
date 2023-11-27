@@ -39,16 +39,54 @@ python cli.py sig-verify ab466cd8924518f07172c0f8c695c60f77c11357b461d787ef31864
 # => True
 ```
 
-From within this repo you can generate the ZoKrates input values for the CLI..
+## How to generate experimental EdDSA sig snark proof
+
+From within the eddsa directory in this repo you can generate the ZoKrates input values for the CLI..
 
 ```bash
-python test.py
+# creates file eddsa_verification_zokrates_cli_inputs.txt
+python main.py
 ```
 
 ..which you can then use to compute a witness, generate a proof, and verify it:
 
 ```bash
-cat zokrates_inputs.txt | xargs zokrates compute-witness -a
+# produces files: out, out.r1cs, abi.json
+zokrates compile -i eddsa_verification.zok
+
+# produces files: proving.key & verification.key
+zokrates setup
+
+# produces file: witness
+cat eddsa_verification_zokrates_cli_inputs.txt | xargs zokrates compute-witness -a
+
+# produces file: proof.json
 zokrates generate-proof
+
+zokrates verify
+```
+
+## How to generate experimental array handling snark proof
+
+From within the arrays directory do the following:
+
+```bash
+# produces files: out, out.r1cs, abi.json
+zokrates compile -i array_handling.zok
+
+# produces files: proving.key & verification.key
+zokrates setup
+
+# order of arary parameters: keys[0], keys[1], ownership, addresses, balances
+zokrates compute-witness -a \
+0 0 0 5 \
+0 0 0 0 \
+0 0 0 1 \
+0 0 0 5 \
+2 2 2 3
+
+# produces file: proof.json
+zokrates generate-proof
+
 zokrates verify
 ```
