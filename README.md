@@ -1,4 +1,13 @@
-# What to do
+# Experiments with ZoKrates
+
+## What you need to run the code
+
+You need to have ZoKrates CLI installed: https://zokrates.github.io/gettingstarted.html
+Make sure the stdlib env variable is set:
+```bash
+# Your path may be different
+export ZOKRATES_STDLIB=~/.zokrates/stdlib
+```
 
 You need to have the following Python library cloned and installed: https://github.com/Zokrates/pycrypto/tree/master
 
@@ -7,6 +16,8 @@ git clone https://github.com/Zokrates/pycrypto.git
 cd pycrypto
 pip install -r requirements.txt
 ```
+
+## How to generate EdDSA sigs
 
 From within the pycrypto repo you can generate an EdDSA signature:
 

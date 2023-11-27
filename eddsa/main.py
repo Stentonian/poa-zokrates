@@ -19,5 +19,5 @@ if __name__ == "__main__":
     is_verified = pk.verify(sig, msg)
     print(is_verified)
 
-    path = 'zokrates_inputs.txt'
+    path = 'eddsa_verification_zokrates_cli_inputs.txt'
     write_signature_for_zokrates_cli(pk, sig, msg, path)
