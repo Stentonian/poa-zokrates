@@ -112,3 +112,31 @@ zokrates generate-proof
 
 zokrates verify
 ```
+
+## How to generate PoA snark proof
+
+From within the poa directory in this repo you can generate the ZoKrates input values for the CLI..
+
+```bash
+# creates file poa_zokrates_cli_inputs.txt
+# note this only works for N=2
+python main.py
+```
+
+..which you can then use to compute a witness, generate a proof, and verify it:
+
+```bash
+# produces files: out, out.r1cs, abi.json
+zokrates compile -i poa.zok
+
+# produces files: proving.key & verification.key
+zokrates setup
+
+# produces file: witness
+cat poa_zokrates_cli_inputs.txt | xargs zokrates compute-witness -a
+
+# produces file: proof.json
+zokrates generate-proof
+
+zokrates verify
+```
