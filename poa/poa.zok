@@ -1,0 +1,29 @@
+// This PoA will verify EdDSA signatures.
+
+// import "signatures/verifyEddsa.code" as verifyEddsa;
+import "./verifyEddsa.code" as verifyEddsa;
+import "ecc/babyjubjubParams.code" as context;
+from "ecc/babyjubjubParams" import BabyJubJubParams;
+
+// size of the anonimity set
+const u32 N = 2;
+
+def main(private field[N][2] R, private field[N] S, private field[N][2] A, u32[N][8] M0, u32[N][8] M1, private bool[N] ownership, field[N] balances, field[N][2] anonSet) -> field {
+
+  	BabyJubJubParams context = context();
+
+    field mut res = 0;
+    for u32 i in 0..N {
+        res = res + if ownership[i] == true {
+            balances[i]
+        } else {
+            0
+        };
+
+        bool isVerified = verifyEddsa(R[i], S[i], A[i], M0[i], M1[i], context);
+        bool inAnonSet = A[i][0] == anonSet[i][0] && A[i][1] == anonSet[i][1];
+        assert(!ownership[i] || (isVerified && inAnonSet));
+    }
+
+    return res;
+}
