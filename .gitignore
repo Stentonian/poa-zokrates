@@ -8,5 +8,5 @@ proving.key
 out*
 abi.json
 proof.json
-zokrates_inputs.txt
+*cli_inputs.txt
 build/
