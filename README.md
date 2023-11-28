@@ -1,5 +1,7 @@
 # Experiments with ZoKrates
 
+All proofs have been tested using the G16 system.
+
 ## What you need to run the code
 
 You need to have ZoKrates CLI installed: https://zokrates.github.io/gettingstarted.html
@@ -77,13 +79,33 @@ zokrates compile -i array_handling.zok
 # produces files: proving.key & verification.key
 zokrates setup
 
-# order of arary parameters: keys[0], keys[1], ownership, addresses, balances
+# order of parameters: keys[0], keys[1], ownership, addresses, balances
 zokrates compute-witness -a \
 0 0 0 5 \
 0 0 0 0 \
 0 0 0 1 \
 0 0 0 5 \
 2 2 2 3
+
+# produces file: proof.json
+zokrates generate-proof
+
+zokrates verify
+```
+
+## How to generate keccak snark proof
+
+From within the hashes directory do the following:
+
+```bash
+# produces files: out, out.r1cs, abi.json
+zokrates compile -i keccak256.zok
+
+# produces files: proving.key & verification.key
+zokrates setup
+
+# produces file: witness
+zokrates compute-witness -a 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 
 # produces file: proof.json
 zokrates generate-proof
