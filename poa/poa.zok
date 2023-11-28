@@ -15,7 +15,7 @@ from "EMBED" import u8_from_bits;
 import "./keccak" as keccak;
 
 // size of the anonimity set
-const u32 N = 2;
+const u32 N = 100;
 
 def bool_to_u8_arr<Q, P>(bool[Q] bits) -> u8[P] {
 	u8[P] mut res = [0; P];
